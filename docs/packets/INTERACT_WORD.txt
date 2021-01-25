@@ -1,0 +1,33 @@
+{
+  cmd: 'INTERACT_WORD',
+  data: {
+    uid: 34183449,
+    uname: '-娱生',
+    uname_color: '',
+    identities: [ 1 ],
+    msg_type: 1,
+    roomid: 92613,
+    timestamp: 1611585515,
+    score: 1611585515942,
+    fans_medal: {
+      target_id: 423895,
+      medal_level: 2,
+      medal_name: '老菊',
+      medal_color: 12632256,
+      medal_color_start: 12632256,
+      medal_color_end: 12632256,
+      medal_color_border: 12632256,
+      is_lighted: 0,
+      guard_level: 0,
+      special: '',
+      icon_id: 0,
+      anchor_roomid: 1030,
+      score: 319
+    },
+    is_spread: 0,
+    spread_info: '',
+    contribution: { grade: 0 },
+    spread_desc: '',
+    tail_icon: 0
+  }
+}

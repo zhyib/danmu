@@ -1,0 +1,16 @@
+{
+  cmd: 'HOT_RANK_CHANGED',
+  data: {
+    rank: 24,
+    trend: 2,
+    countdown: 395,
+    timestamp: 1611586405,
+    web_url: 'https://live.bilibili.com/p/html/live-app-hotrank/index.html?clientType=2&area_id=6',
+    live_url: 'https://live.bilibili.com/p/html/live-app-hotrank/index.html?clientType=1&area_id=6&is_live_half_webview=1&hybrid_rotate_d=1&is_cling_player=1&hybrid_half_ui=1,3,100p,70p,f4eefa,0,30,100,0,0;2,2,375,100p,f4eefa,0,30,100,0,0;3,3,100p,70p,f4eefa,0,30,100,0,0;4,2,375,100p,f4eefa,0,30,100,0,0;5,3,100p,70p,f4eefa,0,30,100,0,0;6,3,100p,70p,f4eefa,0,30,100,0,0;7,3,100p,70p,f4eefa,0,30,100,0,0;8,3,100p,70p,f4eefa,0,30,100,0,0',
+    blink_url: 'https://live.bilibili.com/p/html/live-app-hotrank/index.html?clientType=3&area_id=6&is_live_half_webview=1&hybrid_rotate_d=1&is_cling_player=1&hybrid_half_ui=1,3,100p,70p,f4eefa,0,30,100,0,0;2,2,375,100p,f4eefa,0,30,100,0,0;3,3,100p,70p,f4eefa,0,30,100,0,0;4,2,375,100p,f4eefa,0,30,100,0,0;5,3,100p,70p,f4eefa,0,30,100,0,0;6,3,100p,70p,f4eefa,0,30,100,0,0;7,3,100p,70p,f4eefa,0,30,100,0,0;8,3,100p,70p,f4eefa,0,30,100,0,0',
+    live_link_url: 'https://live.bilibili.com/p/html/live-app-hotrank/index.html?clientType=5&area_id=6&is_live_half_webview=1&hybrid_rotate_d=1&is_cling_player=1&hybrid_half_ui=1,3,100p,70p,f4eefa,0,30,100,0,0;2,2,375,100p,f4eefa,0,30,100,0,0;3,3,100p,70p,f4eefa,0,30,100,0,0;4,2,375,100p,f4eefa,0,30,100,0,0;5,3,100p,70p,f4eefa,0,30,100,0,0;6,3,100p,70p,f4eefa,0,30,100,0,0;7,3,100p,70p,f4eefa,0,30,100,0,0;8,3,100p,70p,f4eefa,0,30,100,0,0',
+    pc_link_url: 'https://live.bilibili.com/p/html/live-app-hotrank/index.html?clientType=4&is_live_half_webview=1&area_id=6&pc_ui=338,465,f4eefa,0',
+    icon: 'https://i0.hdslb.com/bfs/live/465ca4a22719239c6f4effee4a74183966e75de3.png',
+    area_name: '单机'
+  }
+}{\rtf1}

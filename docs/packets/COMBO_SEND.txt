@@ -1,0 +1,37 @@
+{
+  cmd: 'COMBO_SEND',
+  data: {
+    uid: 195400250,
+    ruid: 13046,
+    uname: 'Kry阿越和夫人贴贴',
+    r_uname: '少年Pi',
+    combo_num: 1,
+    gift_id: 30607,
+    gift_num: 0,
+    batch_combo_num: 1,
+    gift_name: '小心心',
+    action: '投喂',
+    combo_id: 'gift:combo_id:195400250:13046:30607:1611585084.5218',
+    batch_combo_id: 'batch:gift:combo_id:195400250:13046:30607:1611585084.5224',
+    is_show: 1,
+    send_master: null,
+    name_color: '',
+    total_num: 1,
+    medal_info: {
+      target_id: 13046,
+      special: '',
+      icon_id: 0,
+      anchor_uname: '',
+      anchor_roomid: 0,
+      medal_level: 3,
+      medal_name: '帅Pi',
+      medal_color: 6067854,
+      medal_color_start: 6067854,
+      medal_color_end: 6067854,
+      medal_color_border: 6067854,
+      is_lighted: 1,
+      guard_level: 0
+    },
+    combo_total_coin: 0
+  }
+}

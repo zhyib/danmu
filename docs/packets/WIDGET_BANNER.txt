@@ -1,0 +1,4 @@
+{
+  cmd: 'WIDGET_BANNER',
+  data: { timestamp: 1611586470, widget_list: { '4': [Object] } }
+}

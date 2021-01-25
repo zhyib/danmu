@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
 const pako = require('pako');
 
+// const ROOM_ID = 350964;
 const ROOM_ID = 92613;
 
 const HEART_BEAT = 2;       // 心跳
@@ -9,8 +10,9 @@ const MSG = 5;              // 通知
 const ENTER_ROOM = 7;       // 进房
 const ENTER_ROOM_RES = 8;   // 进房回应
 
-const DISPLAY_ENTER_ROOM = false;
+const DISPLAY_INTERACT_WORD = false;
 const DISPLAY_GIFT = true;
+const DISPLAY_NOTICE_MSG = false;
 
 function readIntFromBuffer(buffer, offset, length) {
   let ret = 0;
@@ -54,12 +56,14 @@ function decode(buffer) {
     packet.body = [readIntFromBuffer(buffer, 16, packet.packetLength - packet.headerLength)];
   } else {
     let unzipped;
+
     try {
       unzipped = Buffer.from(pako.inflate(buffer.slice(packet.headerLength)));
     } catch(e) {
       // console.log(e, packet.operation, buffer.slice(packet.headerLength).toString());
-      console.log(e);
+      packet.body.push(JSON.parse(buffer.slice(packet.headerLength).toString()));
     }
+
     if (unzipped) {
       // 同一条 message 中可能存在多条信息，用正则筛出来
       const group = unzipped.toString().split(/[\x00-\x1f]+/);
@@ -68,7 +72,6 @@ function decode(buffer) {
           packet.body.push(JSON.parse(item));
         } catch(e) {
           // 忽略非 JSON 字符串，通常情况下为分隔符
-          // console.log(e)
         }
       });
     }
@@ -95,43 +98,86 @@ function handlePacket(packet) {
   }
 }
 
+function handleComboSend(item) {
+  const data = item.data;
+  if (DISPLAY_GIFT) {
+    console.log(`${data.uname} ${data.action} ${data.gift_name} * ${data.total_num}`);
+  }
+}
+
+function handleEntryEffect(item) {
+  const data = item.data;
+  console.log(`${data.copy_writing}`);
+}
+
+function handleInteractWord(item) {
+  const data = item.data;
+  if (DISPLAY_INTERACT_WORD) {
+    console.log(`${data.uname} 进入房间`);
+  }
+}
+
+function handleNoticeMsg(item) {
+  if (DISPLAY_NOTICE_MSG) {
+    console.log(`${item.msg_common}`);
+  }
+}
+
+function handleRoomRealTimeMessageUpdate(item) {
+  const data = item.data;
+  console.log(`${data.roomid}直播间状态更新：粉丝数${data.fans}，粉丝团${data.fans_club}`)
+}
+
+function handleSendGift(item) {
+  const data = item.data;
+  if (DISPLAY_GIFT) {
+    console.log(`${data.uname} ${data.action} ${data.giftName} * ${data.num}`);
+  }
+}
+
+function handleSuperChatMessage(item) {
+  const data = item.data;
+  console.log(`${data.user_info.uname} 的 ${data.price} 元 ${data.gift.gift_name}：${data.message}`)
+}
+
 function handleMessage(packet) {
   packet.body.forEach((item) => {
     if (item >= 0 && item <= 9) {
       return;
     }
     switch (item.cmd) {
+      case 'COMBO_SEND':
+        // ZIPPED
+        handleComboSend(item);
+        break;
       case 'DANMU_MSG':
-        // console.log('DANMU_MSG');
-        // console.log(item.info);
+        // ZIPPED
         console.log(`${item.info[2][1]}说：${item.info[1]}`);
         break;
+      case 'ENTRY_EFFECT':
+        // ZIPPED
+        handleEntryEffect(item);
+        break;
       case 'INTERACT_WORD':
-        // console.log('INTERACT_WORD');
-        // console.log(item.data);
-        if (DISPLAY_ENTER_ROOM) {
-          console.log(`${item.data.uname} 进入房间`);
-        }
+        // ZIPPED
+        handleInteractWord(item);
+        break;
+      case 'NOTICE_MSG':
+        handleNoticeMsg(item);
         break;
       case 'SEND_GIFT':
-        // console.log(item.data);
-        if (DISPLAY_GIFT) {
-          console.log(`${item.data.uname} ${item.data.action} ${item.data.giftName} * ${item.data.num}`);
-        }
+        // ZIPPED
+        handleSendGift(item);
         break;
-      case 'COMBO_SEND':
-        // console.log(item.data);
-        if (DISPLAY_GIFT) {
-          console.log(`${item.data.uname} ${item.data.action} ${item.data.gift_name} * ${item.data.total_num}`);
-        }
+      case 'ROOM_REAL_TIME_MESSAGE_UPDATE':
+        handleRoomRealTimeMessageUpdate(item);
         break;
-      case 'ENTRY_EFFECT':
-        // console.log(item.data);
-        console.log(`${item.data.copy_writing}`);
+      case 'SUPER_CHAT_MESSAGE':
+      case 'SUPER_CHAT_MESSAGE_JPN':
+        handleSuperChatMessage(item);
         break;
       default:
-        console.log('Default');
-        console.log(item);
+        console.log('Default', item);
         break;
     }
   })

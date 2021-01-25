@@ -1,0 +1,26 @@
+{
+  cmd: 'ENTRY_EFFECT',
+  data: {
+    id: 4,
+    uid: 1867447,
+    target_id: 13046,
+    mock_effect: 0,
+    face: 'https://i2.hdslb.com/bfs/face/bfade06f7755239448ef7600391770f1b6e34cd1.jpg',
+    privilege_type: 3,
+    copy_writing: '欢迎舰长 <%千本芸%> 进入直播间',
+    copy_color: '#ffffff',
+    highlight_color: '#E6FF00',
+    priority: 1,
+    basemap_url: 'https://i0.hdslb.com/bfs/live/mlive/f34c7441cdbad86f76edebf74e60b59d2958f6ad.png',
+    show_avatar: 1,
+    effective_time: 2,
+    web_basemap_url: '',
+    web_effective_time: 0,
+    web_effect_close: 0,
+    web_close_time: 0,
+    business: 1,
+    copy_writing_v2: '欢迎舰长 <%千本芸%> 进入直播间',
+    icon_list: [],
+    max_delay_time: 7
+  }
+}

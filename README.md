@@ -4,19 +4,24 @@
 - 命令行界面
 
 ### TODO
-- [ ] API 适配
-    - [x] DANMU_MSG
-    - [ ] WELCOME_GUARD
-    - [x] ENTRY_EFFECT
-    - [ ] SUPER_CHAT_MESSAGE
-    - [ ] ANCHOR_LOT_START
-    - [ ] ANCHOR_LOT_END
-    - [ ] ANCHOR_LOT_AWARD
-    - [ ] GUARD_BUY
-    - [ ] USER_TOAST_MSG
-    - [ ]  NOTICE_MSG
+- [ ] API 适配（按字母升序）
     - [ ] ACTIVITY_BANNER_UPDATE_V2
+    - [ ] ANCHOR_LOT_AWARD
+    - [ ] ANCHOR_LOT_END
+    - [ ] ANCHOR_LOT_START
+    - [x] COMBO_SEND
+    - [x] DANMU_MSG
+    - [x] ENTRY_EFFECT
+    - [ ] GUARD_BUY
+    - [x] INTERACT_WORD
+    - [x] NOTICE_MSG
     - [ ] ROOM_REAL_TIME_MESSAGE_UPDATE
+    - [x] SEND_GIFT
+    - [x] SUPER_CHAT_MESSAGE
+    - [x] SUPER_CHAT_MESSAGE_JPN
+    - [ ] USER_TOAST_MSG
+    - [ ] WELCOME_GUARD
+    - [ ] WIDGET_BANNER
 
 - [ ] GUI
 
