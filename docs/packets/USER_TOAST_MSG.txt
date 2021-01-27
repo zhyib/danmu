@@ -1,0 +1,23 @@
+{
+  cmd: 'USER_TOAST_MSG',
+  data: {
+    op_type: 3,
+    uid: 3237513,
+    username: '蛋蛋呜呀蛋蛋',
+    guard_level: 3,
+    is_show: 0,
+    anchor_show: true,
+    user_show: true,
+    toast_msg: '<%蛋蛋呜呀蛋蛋%> 自动续费了舰长',
+    num: 1,
+    price: 138000,
+    role_name: '舰长',
+    unit: '月',
+    start_time: 1611590469,
+    end_time: 1611590469,
+    target_guard_count: 945,
+    color: '#00D1F1',
+    payflow_id: '2101260000004472575138106',
+    svga_block: 0
+  }
+}

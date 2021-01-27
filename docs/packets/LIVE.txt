@@ -1,0 +1,6 @@
+{
+  cmd: 'LIVE',
+  live_key: '117316576424057588',
+  sub_session_key: '117316576424057588sub_time:1611675613',
+  roomid: 350964
+}

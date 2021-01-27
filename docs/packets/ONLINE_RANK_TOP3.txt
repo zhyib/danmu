@@ -1,0 +1,6 @@
+{
+  cmd: 'ONLINE_RANK_TOP3',
+  data: {
+    list: [ [Object] ]
+  }
+}

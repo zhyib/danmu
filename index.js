@@ -1,8 +1,8 @@
 const WebSocket = require('ws');
 const pako = require('pako');
 
-// const ROOM_ID = 350964;
-const ROOM_ID = 92613;
+const ROOM_ID = 350964;
+// const ROOM_ID = 92613;
 
 const HEART_BEAT = 2;       // 心跳
 const HEART_BEAT_RES = 3;   // 心跳回应
@@ -10,9 +10,12 @@ const MSG = 5;              // 通知
 const ENTER_ROOM = 7;       // 进房
 const ENTER_ROOM_RES = 8;   // 进房回应
 
-const DISPLAY_INTERACT_WORD = false;
+const DISPLAY_INTERACT_WORD = true;
 const DISPLAY_GIFT = true;
 const DISPLAY_NOTICE_MSG = false;
+
+let timeHotRank = 0;
+let timeRoomRank = 0;
 
 function readIntFromBuffer(buffer, offset, length) {
   let ret = 0;
@@ -98,6 +101,10 @@ function handlePacket(packet) {
   }
 }
 
+function handleDanmuMsg(item) {
+  console.log(`${item.info[2][1]}说：${item.info[1]}`);
+}
+
 function handleComboSend(item) {
   const data = item.data;
   if (DISPLAY_GIFT) {
@@ -110,6 +117,14 @@ function handleEntryEffect(item) {
   console.log(`${data.copy_writing}`);
 }
 
+function handleHotRankChanged(item) {
+  const data = item.data;
+  if (timeHotRank !== data.timestamp) {
+    timeHotRank = data.timestamp;
+    console.log(`分区榜单：${data.area_name} ${data.rank}`);
+  }
+}
+
 function handleInteractWord(item) {
   const data = item.data;
   if (DISPLAY_INTERACT_WORD) {
@@ -120,6 +135,22 @@ function handleInteractWord(item) {
 function handleNoticeMsg(item) {
   if (DISPLAY_NOTICE_MSG) {
     console.log(`${item.msg_common}`);
+  }
+}
+
+/**
+ * 高能榜
+ * @param {Object} item 
+ */
+function handleOnlineRankV2(item) {
+  // console.log('ONLINE_RANK_V2');
+}
+
+function handleRoomRank(item) {
+  const data = item.data;
+  if (timeRoomRank !== data.timestamp) {
+    timeHotRank = data.timestamp;
+    // console.log(`小时榜单：${data.rank_desc}`);
   }
 }
 
@@ -140,45 +171,36 @@ function handleSuperChatMessage(item) {
   console.log(`${data.user_info.uname} 的 ${data.price} 元 ${data.gift.gift_name}：${data.message}`)
 }
 
+function handleWidgetBanner(item) {
+  const sub_data = item.data.widget_list[4].sub_data;
+  // console.log(JSON.parse(decodeURIComponent(sub_data)));
+}
+
+const handlers = {
+  'COMBO_SEND': handleComboSend,  // ZIPPED
+  'DANMU_MSG': handleDanmuMsg,  // ZIPPED
+  'ENTRY_EFFECT': handleEntryEffect,  // ZIPPED
+  'HOT_RANK_CHANGED': handleHotRankChanged,
+  'INTERACT_WORD': handleInteractWord,  // ZIPPED
+  'NOTICE_MSG': handleNoticeMsg,
+  'ONLINE_RANK_V2': handleOnlineRankV2,
+  'ROOM_RANK': handleRoomRank,
+  'ROOM_REAL_TIME_MESSAGE_UPDATE': handleRoomRealTimeMessageUpdate,
+  'SEND_GIFT': handleSendGift,  // ZIPPED
+  'SUPER_CHAT_MESSAGE': handleSuperChatMessage,
+  'SUPER_CHAT_MESSAGE_JPN': handleSuperChatMessage,
+  'WIDGET_BANNER': handleWidgetBanner,
+}
+
 function handleMessage(packet) {
   packet.body.forEach((item) => {
     if (item >= 0 && item <= 9) {
       return;
     }
-    switch (item.cmd) {
-      case 'COMBO_SEND':
-        // ZIPPED
-        handleComboSend(item);
-        break;
-      case 'DANMU_MSG':
-        // ZIPPED
-        console.log(`${item.info[2][1]}说：${item.info[1]}`);
-        break;
-      case 'ENTRY_EFFECT':
-        // ZIPPED
-        handleEntryEffect(item);
-        break;
-      case 'INTERACT_WORD':
-        // ZIPPED
-        handleInteractWord(item);
-        break;
-      case 'NOTICE_MSG':
-        handleNoticeMsg(item);
-        break;
-      case 'SEND_GIFT':
-        // ZIPPED
-        handleSendGift(item);
-        break;
-      case 'ROOM_REAL_TIME_MESSAGE_UPDATE':
-        handleRoomRealTimeMessageUpdate(item);
-        break;
-      case 'SUPER_CHAT_MESSAGE':
-      case 'SUPER_CHAT_MESSAGE_JPN':
-        handleSuperChatMessage(item);
-        break;
-      default:
-        console.log('Default', item);
-        break;
+    if (handlers[item.cmd] !== undefined) {
+      handlers[item.cmd](item);
+    } else {
+      console.log('DEFAULT', item);
     }
   })
 }
