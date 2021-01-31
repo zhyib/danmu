@@ -2,7 +2,6 @@
   "name": "danmu",
   "version": "0.1.0",
   "private": true,
-  "main": "main.js",
   "scripts": {
     "dev": "concurrently \"vue-cli-service serve\" \"electron main.js\"",
     "serve": "vue-cli-service serve",
