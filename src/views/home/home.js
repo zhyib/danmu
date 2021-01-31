@@ -6,17 +6,28 @@ export default {
   name: 'home',
   data() {
     return {
-      roomid: 0,
-      display: '',
+      roomid: '',
+      displayMain: '',
+      displayGift: '',
       popularity: 0,
+      ws: null,
+      displayConfig: CONFIG.DISPLAY,
     };
+  },
+  updated() {
+    const mainBox = document.getElementById('mainBox');
+    const giftBox = document.getElementById('giftBox');
+    mainBox.scrollTop = mainBox.scrollHeight;
+    console.log(mainBox.scrollTop, mainBox.scrollHeight);
+    giftBox.scrollTop = giftBox.scrollHeight;
   },
   methods: {
     connect() {
       const topThis = this;
+      const ws = new WebSocket('ws://broadcastlv.chat.bilibili.com:2244/sub');
+      this.ws = ws;
       const { roomid } = this;
       CONFIG.ROOM_ID = roomid;
-      const ws = new WebSocket('ws://broadcastlv.chat.bilibili.com:2244/sub');
       ws.onopen = function onopen() {
         console.log('Connection open ...');
         try {
@@ -45,8 +56,15 @@ export default {
       };
 
       ws.onclose = function onclose(res) {
+        topThis.$message({
+          message: '连接已断开',
+          type: 'success',
+        });
         console.log('Connection closed.');
       };
+    },
+    disconnect() {
+      this.ws.close();
     },
     dispalyPacket(packet) {
       switch (packet.type) {
@@ -63,14 +81,36 @@ export default {
           });
           break;
         default:
-          throw new Error('Cannot hanlde: Unknown operarion');
+          throw new Error('Cannot hanlde: Unknown operarion.');
       }
     },
     handleMsg(packet) {
       const bodys = packet.body;
       for (let i = 0; i < bodys.length; i++) {
-        this.display += `${bodys[i].body}</br>`;
+        const inner = bodys[i];
+        switch (inner.type) {
+          case 'MainBox':
+            this.displayMain += `${bodys[i].body}</br>`;
+            break;
+          case 'GiftBox':
+            this.displayGift += `${bodys[i].body}</br>`;
+            break;
+          case 'Hide':
+            break;
+          case 'Unknown':
+            console.log(inner);
+            break;
+          default:
+            throw new Error(`Cannot display: Unhandled type, ${inner.type}`);
+        }
       }
+    },
+  },
+  computed: {
+  },
+  watch: {
+    displayConfig() {
+      CONFIG.DISPLAY = this.displayConfig;
     },
   },
 };

@@ -10,9 +10,18 @@ const RES_CODE = {
 };
 
 const CONFIG = {
-  DISPLAY_INTERACT_WORD: true,
-  DISPLAY_GIFT: true,
-  DISPLAY_NOTICE_MSG: false,
+  DISPLAY: [
+    'DISPLAY_INTERACT_WORD',
+    'DISPLAY_GIFT',
+    'DISPLAY_NOTICE_MSG',
+  ],
+};
+
+const TYPE = {
+  HIDE: 'Hide',
+  MAIN_BOX: 'MainBox',
+  GIFT_BOX: 'GiftBox',
+  UNKNOWN: 'Unknown',
 };
 
 function readIntFromBuffer(buffer, offset, length) {
@@ -89,16 +98,21 @@ function decode(buffer) {
 
 function handleComboSend(item) {
   const { data } = item;
+  if (CONFIG.DISPLAY.indexOf('DISPLAY_GIFT') !== -1) {
+    return {
+      type: TYPE.GIFT_BOX,
+      body: `${data.uname} ${data.action} ${data.gift_name} * ${data.total_num}`,
+      raw: data,
+    };
+  }
   return {
-    type: 'ComboSend',
-    body: `${data.uname} ${data.action} ${data.gift_name} * ${data.total_num}`,
-    raw: data,
+    type: TYPE.HIDE,
   };
 }
 
 function handleDanmuMsg(item) {
   return {
-    type: 'DanmuMsg',
+    type: TYPE.MAIN_BOX,
     body: `${item.info[2][1]}说：${item.info[1]}`,
     raw: item.info,
   };
@@ -107,7 +121,7 @@ function handleDanmuMsg(item) {
 function handleEntryEffect(item) {
   const { data } = item;
   return {
-    type: 'EntryEffect',
+    type: TYPE.MAIN_BOX,
     body: `${data.copy_writing}`,
     raw: data,
   };
@@ -116,7 +130,7 @@ function handleEntryEffect(item) {
 function handleHotRankChanged(item) {
   const { data } = item;
   return {
-    type: 'HotRankChanged',
+    type: TYPE.MAIN_BOX,
     body: `分区榜单：${data.area_name} ${data.rank}`,
     raw: data,
   };
@@ -124,18 +138,28 @@ function handleHotRankChanged(item) {
 
 function handleInteractWord(item) {
   const { data } = item;
+  if (CONFIG.DISPLAY.indexOf('DISPLAY_INTERACT_WORD') !== -1) {
+    return {
+      type: TYPE.MAIN_BOX,
+      body: `${data.uname} 进入房间`,
+      raw: data,
+    };
+  }
   return {
-    type: 'InteractWord',
-    body: `${data.uname} 进入房间`,
-    raw: data,
+    type: TYPE.HIDE,
   };
 }
 
 function handleNoticeMsg(item) {
+  if (CONFIG.DISPLAY.DISPLAY_NOTICE_MSG !== -1) {
+    return {
+      type: TYPE.MAIN_BOX,
+      body: `${item.msg_common}`,
+      raw: item,
+    };
+  }
   return {
-    type: 'NoticeMsg',
-    body: `${item.msg_common}`,
-    raw: item,
+    type: TYPE.HIDE,
   };
 }
 
@@ -146,7 +170,7 @@ function handleOnlineRankV2(item) {
 function handleRoomRank(item) {
   const { data } = item;
   return {
-    type: 'RoomRank',
+    type: TYPE.HIDE,
     body: `小时榜单：${data.rank_desc}`,
     raw: data,
   };
@@ -155,7 +179,7 @@ function handleRoomRank(item) {
 function handleRoomRealTimeMessageUpdate(item) {
   const { data } = item;
   return {
-    type: 'RoomRealTimeMessageUpdate',
+    type: TYPE.MAIN_BOX,
     body: `${data.roomid}直播间状态更新：粉丝数${data.fans}，粉丝团${data.fans_club}`,
     raw: data,
   };
@@ -163,17 +187,22 @@ function handleRoomRealTimeMessageUpdate(item) {
 
 function handleSendGift(item) {
   const { data } = item;
+  if (CONFIG.DISPLAY.indexOf('DISPLAY_GIFT') !== -1) {
+    return {
+      type: TYPE.GIFT_BOX,
+      body: `${data.uname} ${data.action} ${data.giftName} * ${data.num}`,
+      raw: data,
+    };
+  }
   return {
-    type: 'SendGift',
-    body: `${data.uname} ${data.action} ${data.giftName} * ${data.num}`,
-    raw: data,
+    type: TYPE.HIDE,
   };
 }
 
 function handleSuperChatMessage(item) {
   const { data } = item;
   return {
-    type: 'SuperChatMessage',
+    type: TYPE.GIFT_BOX,
     body: `${data.user_info.uname} 的 ${data.price} 元 ${data.gift.gift_name}：${data.message}`,
     raw: data,
   };
@@ -182,7 +211,7 @@ function handleSuperChatMessage(item) {
 function handleWidgetBanner(item) {
   const subData = item.data.widget_list[4].sub_data;
   return {
-    type: 'WidgetBanner',
+    type: TYPE.HIDE,
     body: 'WidgetBanner',
     raw: JSON.parse(decodeURIComponent(subData)),
   };
@@ -216,7 +245,7 @@ function handleMessage(packet) {
       ret.body.push(handlers[item.cmd](item));
     } else {
       ret.body.push({
-        type: 'DEFAULT',
+        type: TYPE.UNKNOWN,
         body: item,
       });
     }

@@ -9,6 +9,6 @@ let window = null;
 app.on('ready', () => {
   window = new BrowserWindow({ width: 800, height: 600 });
   window.on('close', () => { window = null; });
-  // window.loadURL('http://localhost:8080');
-  window.loadURL(`${app.getAppPath()}/dist/index.html`);
+  window.loadURL('http://localhost:8080');
+  // window.loadURL(`${app.getAppPath()}/dist/index.html`);
 });
