@@ -90,9 +90,9 @@ function decode(buffer) {
       });
     }
   } else {
-    throw new Error('Decode faied: Invalid operation');
+    throw new Error('Decode failed: Invalid operation');
   }
-  // console.log(packet);
+  console.log(packet);
   return packet;
 }
 
@@ -268,7 +268,7 @@ function handlePacket(packet) {
         body: [`连接房间${CONFIG.ROOM_ID}成功`],
       };
     default:
-      throw new Error('Cannot hanlde: Unknown operarion');
+      throw new Error('Cannot handle: Unknown operation');
   }
 }
 

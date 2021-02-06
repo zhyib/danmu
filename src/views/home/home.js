@@ -14,24 +14,28 @@ export default {
       displayConfig: CONFIG.DISPLAY,
     };
   },
-  updated() {
-    const mainBox = document.getElementById('mainBox');
-    const giftBox = document.getElementById('giftBox');
-    mainBox.scrollTop = mainBox.scrollHeight;
-    console.log(mainBox.scrollTop, mainBox.scrollHeight);
-    giftBox.scrollTop = giftBox.scrollHeight;
-  },
   methods: {
     connect() {
       const topThis = this;
       const ws = new WebSocket('ws://broadcastlv.chat.bilibili.com:2244/sub');
       this.ws = ws;
       const { roomid } = this;
+
+      if (!/^\d+$/.test(roomid) || +roomid === 0) {
+        this.$message({
+          message: '请输入有效数字',
+          duration: 1000,
+          type: 'error',
+        });
+        return;
+      }
+
       CONFIG.ROOM_ID = roomid;
       ws.onopen = function onopen() {
         console.log('Connection open ...');
         try {
           ws.send(encode(RES_CODE.ENTER_ROOM, { roomid }));
+          ws.send(encode(RES_CODE.HEART_BEAT, { roomid }));
           setInterval(() => {
             ws.send(encode(RES_CODE.HEART_BEAT, { roomid }));
           }, 30000);
@@ -43,12 +47,12 @@ export default {
       ws.onmessage = function onmessage(res) {
         // res.data is a blob
         const reader = new FileReader();
-        reader.readAsArrayBuffer(res.data, 'utf-8');
+        reader.readAsArrayBuffer(res.data);
         reader.onload = function onload() {
           try {
             const buffer = Buffer.from(reader.result);
             const packet = decode(buffer);
-            topThis.dispalyPacket(handlePacket(packet));
+            topThis.displayPacket(handlePacket(packet));
           } catch (e) {
             console.log(e);
           }
@@ -66,7 +70,7 @@ export default {
     disconnect() {
       this.ws.close();
     },
-    dispalyPacket(packet) {
+    displayPacket(packet) {
       switch (packet.type) {
         case 'HEART_BEAT_RES':
           this.popularity = packet.body[0];
@@ -91,9 +95,15 @@ export default {
         switch (inner.type) {
           case 'MainBox':
             this.displayMain += `${bodys[i].body}</br>`;
+            this.$nextTick(() => {
+              this.$refs.mainCol.scrollTop = this.$refs.mainBox.scrollHeight;
+            });
             break;
           case 'GiftBox':
             this.displayGift += `${bodys[i].body}</br>`;
+            this.$nextTick(() => {
+              this.$refs.giftCol.scrollTop = this.$refs.giftBox.scrollHeight;
+            });
             break;
           case 'Hide':
             break;
@@ -106,8 +116,7 @@ export default {
       }
     },
   },
-  computed: {
-  },
+  computed: {},
   watch: {
     displayConfig() {
       CONFIG.DISPLAY = this.displayConfig;

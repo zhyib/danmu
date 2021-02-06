@@ -1,3 +1,18 @@
-.header {
-    height: 80px;
+#container {
+    height: 100%;
+    padding: 10px 10px 0 10px;
+}
+
+#header {
+    height: 60px;
+}
+
+#status {
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#foot-content {
+    text-align: right;
 }
