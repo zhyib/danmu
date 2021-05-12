@@ -1,9 +1,11 @@
+import medal from '@/components/medal/index';
 import {
   encode, decode, handlePacket, CONFIG, RES_CODE,
 } from './core';
 
 export default {
   name: 'home',
+  components: { medal },
   data() {
     return {
       roomid: '',

@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-      <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link> -->
     <!-- <router-view/> -->
     <home></home>
   </div>
@@ -18,7 +19,7 @@
 </style>
 
 <script>
-import home from '@/views/home/home.vue';
+import home from '@/views/home/index';
 
 export default {
   components: {

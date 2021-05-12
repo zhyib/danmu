@@ -11,7 +11,7 @@ const RES_CODE = {
 
 const CONFIG = {
   DISPLAY: [
-    'DISPLAY_INTERACT_WORD',
+    // 'DISPLAY_INTERACT_WORD',
     'DISPLAY_GIFT',
     'DISPLAY_NOTICE_MSG',
   ],
@@ -92,7 +92,7 @@ function decode(buffer) {
   } else {
     throw new Error('Decode failed: Invalid operation');
   }
-  console.log(packet);
+  // console.log(packet);
   return packet;
 }
 
@@ -101,7 +101,7 @@ function handleComboSend(item) {
   if (CONFIG.DISPLAY.indexOf('DISPLAY_GIFT') !== -1) {
     return {
       type: TYPE.GIFT_BOX,
-      body: `${data.uname} ${data.action} ${data.gift_name} * ${data.total_num}`,
+      body: `${data.uname} ${data.action} ${data.gift_name} 共 ${data.total_num} 个`,
       raw: data,
     };
   }
@@ -113,16 +113,22 @@ function handleComboSend(item) {
 function handleDanmuMsg(item) {
   return {
     type: TYPE.MAIN_BOX,
-    body: `${item.info[2][1]}说：${item.info[1]}`,
+    body: `
+      <medal :color="${item.info[3][4]}" :name="${item.info[3][1]}" :level="${item.info[3][0]}"></medal>
+      <span style="color: #999999">${item.info[2][1]}</span>：${item.info[1]}
+    `,
     raw: item.info,
   };
 }
 
 function handleEntryEffect(item) {
   const { data } = item;
+  let str = data.copy_writing;
+  str = str.replace('<%', '<b>');
+  str = str.replace('%>', '</b>');
   return {
     type: TYPE.MAIN_BOX,
-    body: `${data.copy_writing}`,
+    body: `${str}`,
     raw: data,
   };
 }

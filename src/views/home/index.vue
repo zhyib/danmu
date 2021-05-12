@@ -46,7 +46,11 @@
     </el-main>
     <el-footer style="height: 30px">
       <div id="foot-content">
+        <medal :color="13081892" :name="'zyb'" :level="7"></medal>
         Made by AkiraZhyib
+        <a href="https://github.com/zhyib/danmu">
+          <i class="fa fa-github" style="font-size: 20px"></i>
+        </a>
       </div>
     </el-footer>
   </el-container>

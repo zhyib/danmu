@@ -32,9 +32,9 @@ function readIntFromBuffer(buffer, offset, length) {
 function encode(operation, params = {}) {
   const requestHead = Buffer.from([0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, operation, 0, 0, 0, 1]);
 
-  const clientver = '1.6.3' || params.clientver;
-  const platform = 'web' || params.platform;
-  const protover = 2 || params.protover;
+  const clientver = params.clientver || '1.6.3';
+  const platform = params.platform || 'web';
+  const protover = params.protover || 2;
   const roomid = ROOM_ID;
   const type = 2;
   const uid = 0;
