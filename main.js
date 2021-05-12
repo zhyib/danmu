@@ -15,9 +15,12 @@ app.on('ready', () => {
   });
   // window.on('close', () => {
   //   window = null;
-  // });
-  window.loadURL('http://localhost:8080');
-  // window.loadURL(`${app.getAppPath()}/dist/index.html`);
+  // console.log(process.env.NODE_ENV);
+  if (process.env.NODE_ENV === 'dev') {
+    window.loadURL('http://localhost:8080');
+  } else {
+    window.loadURL(`${app.getAppPath()}/dist/index.html`);
+  }
 
   window.show();
 });

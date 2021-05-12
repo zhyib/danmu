@@ -4,12 +4,15 @@
   "private": true,
   "main": "main.js",
   "scripts": {
-    "dev": "concurrently \"vue-cli-service serve\" \"electron main.js\"",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "electronBuild": "electron-builder --win --x64",
-    "package": "npm run build && npm run electronBuild"
+    "build": "vue-cli-service build",
+    "election-dev": "electron main.js",
+    "electron-build": "electron-builder --win --x64",
+    "dev": "cross-env NODE_ENV=dev npm run election-dev | npm run serve",
+    "package": "cross-env NODE_ENV=prod npm run build && npm run electron-build",
+    "build:dev": " npm run dev",
+    "build:prod": " npm run package"
   },
   "build": {
     "appId": "com.xxx.app",
@@ -47,6 +50,7 @@
     "@vue/cli-plugin-vuex": "^4.5.11",
     "@vue/cli-service": "^4.5.0",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
     "electron": "^11.2.1",
     "electron-builder": "^22.9.1",
     "eslint": "^7.19.0",
@@ -54,7 +58,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-vue": "^7.5.0",
     "vue-cli-plugin-element": "~1.0.1",
-    "vue-template-compiler": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
