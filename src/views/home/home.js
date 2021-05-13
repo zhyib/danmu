@@ -13,19 +13,13 @@ export default {
       displayGift: '',
       popularity: 0,
       ws: null,
+      heatBeat: null,
       displayConfig: CONFIG.DISPLAY,
     };
   },
   methods: {
     connect() {
-      const topThis = this;
-      if (this.ws) {
-        this.ws.close();
-      }
-      this.ws = new WebSocket('ws://broadcastlv.chat.bilibili.com:2244/sub');
-
       const { roomid, ws } = this;
-
       // 检查数字有效性
       if (!/^\d+$/.test(roomid) || +roomid === 0) {
         this.$message({
@@ -35,14 +29,20 @@ export default {
         });
         return;
       }
-
       CONFIG.ROOM_ID = roomid;
+
+      const topThis = this;
+      if (this.ws) {
+        this.ws.close();
+      }
+      this.ws = new WebSocket('ws://broadcastlv.chat.bilibili.com:2244/sub');
+
       ws.onopen = function onopen() {
         console.log('Connection open ...');
         try {
           ws.send(encode(RES_CODE.ENTER_ROOM, { roomid }));
           ws.send(encode(RES_CODE.HEART_BEAT, { roomid }));
-          setInterval(() => {
+          topThis.heartBeat = setInterval(() => {
             ws.send(encode(RES_CODE.HEART_BEAT, { roomid }));
           }, 30000);
         } catch (e) {
@@ -50,6 +50,10 @@ export default {
         }
       };
 
+      /**
+       * @description callback when a msg receives
+       * @param res {Object}
+       */
       ws.onmessage = function onmessage(res) {
         // res.data is a blob
         const reader = new FileReader();
@@ -65,6 +69,10 @@ export default {
         };
       };
 
+      /**
+       * @description callback when ws closing
+       * @param res {Object}
+       */
       ws.onclose = function onclose(res) {
         topThis.$message({
           message: '连接已断开',
@@ -74,6 +82,8 @@ export default {
       };
     },
     disconnect() {
+      // 终止心跳包发送
+      clearInterval(this.heatBeat);
       this.ws.close();
     },
     displayPacket(packet) {

@@ -1,3 +1,7 @@
+/**
+ * Deprecated node file.
+ * First version of danmu, write in js as a node application.
+ */
 const pako = require('pako');
 const WebSocket = require('ws');
 
