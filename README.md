@@ -1,9 +1,10 @@
 # danmu
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zhyib/danmu/Node.js%20CI)
 ![Node version](https://img.shields.io/badge/node-%3E%3D12.0-brightgreen)
-- node version v14.15.0
+
+- Develop with Node version v14.15.0
 - 自制弹幕姬
-- 命令行界面
+
 
 ### TODO
 - [ ] API 适配（按字母升序）
@@ -19,15 +20,15 @@
     - [x] NOTICE_MSG
     - [x] ROOM_REAL_TIME_MESSAGE_UPDATE
     - [x] SEND_GIFT
+    - [ ] STOP_LIVE_ROOM_LIST
     - [x] SUPER_CHAT_MESSAGE
     - [x] SUPER_CHAT_MESSAGE_JPN
     - [ ] USER_TOAST_MSG
     - [ ] WELCOME_GUARD
     - [ ] WIDGET_BANNER
 
-- [ ] GUI
+- [x] GUI
 
 
-
-参考API
-> https://github.com/lovelyyoshino/Bilibili-Live-API/blob/master/API.WebSocket.md
+### 参考API
+> [https://github.com/lovelyyoshino/Bilibili-Live-API/blob/master/API.WebSocket.md]()

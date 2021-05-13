@@ -1,7 +1,8 @@
 #medal-body {
+    border: 2px solid;
     border-radius: 3px;
     width: 60px;
-    font-size: x-small;
+    font-size: small;
     margin: 0 4px 0 0;
 }
 

@@ -15,11 +15,12 @@ export default {
       ws: null,
       heatBeat: null,
       displayConfig: CONFIG.DISPLAY,
+      LIMIT_MAIN: 10,
     };
   },
   methods: {
     connect() {
-      const { roomid, ws } = this;
+      const { roomid } = this;
       // 检查数字有效性
       if (!/^\d+$/.test(roomid) || +roomid === 0) {
         this.$message({
@@ -36,6 +37,7 @@ export default {
         this.ws.close();
       }
       this.ws = new WebSocket('ws://broadcastlv.chat.bilibili.com:2244/sub');
+      const { ws } = this;
 
       ws.onopen = function onopen() {
         console.log('Connection open ...');
