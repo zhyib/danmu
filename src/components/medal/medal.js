@@ -1,26 +1,24 @@
 export default {
   name: 'medal',
   props: {
-    color: Number,
+    color: String,
     name: String,
     level: Number,
   },
   data() {
     return {
       medalBorder: {
-        border: `1px solid ${this.hexColor()}`,
+        border: `2px solid ${this.color}`,
+        'background-color': `${this.color}`,
       },
       medalColor: {
-        'background-color': `${this.hexColor()}`,
+        'background-color': `${this.color}`,
       },
       textColor: {
-        color: `${this.hexColor()}`,
+        color: `${this.color}`,
       },
     };
   },
   methods: {
-    hexColor() {
-      return `#${this.color.toString(16)}`;
-    },
   },
 };

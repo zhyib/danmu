@@ -1,15 +1,15 @@
-import medal from '@/components/medal/index';
+import Comment from '@/components/comment/index.vue';
 import {
   encode, decode, handlePacket, CONFIG, RES_CODE,
 } from './core';
 
 export default {
   name: 'home',
-  components: { medal },
+  components: { Comment },
   data() {
     return {
       roomid: '',
-      displayMain: '',
+      displayMain: [],
       displayGift: '',
       popularity: 0,
       ws: null,
@@ -19,10 +19,14 @@ export default {
   methods: {
     connect() {
       const topThis = this;
-      const ws = new WebSocket('ws://broadcastlv.chat.bilibili.com:2244/sub');
-      this.ws = ws;
-      const { roomid } = this;
+      if (this.ws) {
+        this.ws.close();
+      }
+      this.ws = new WebSocket('ws://broadcastlv.chat.bilibili.com:2244/sub');
 
+      const { roomid, ws } = this;
+
+      // 检查数字有效性
       if (!/^\d+$/.test(roomid) || +roomid === 0) {
         this.$message({
           message: '请输入有效数字',
@@ -87,7 +91,7 @@ export default {
           });
           break;
         default:
-          throw new Error('Cannot hanlde: Unknown operarion.');
+          throw new Error('Cannot handle: Unknown operation.');
       }
     },
     handleMsg(packet) {
@@ -96,7 +100,7 @@ export default {
         const inner = bodys[i];
         switch (inner.type) {
           case 'MainBox':
-            this.displayMain += `${bodys[i].body}</br>`;
+            this.displayMain.push(bodys[i].body);
             this.$nextTick(() => {
               this.$refs.mainCol.scrollTop = this.$refs.mainBox.scrollHeight;
             });

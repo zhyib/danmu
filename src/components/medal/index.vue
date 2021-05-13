@@ -1,7 +1,7 @@
 <template>
-  <span class="medal-body" :style="this.medalBorder">
-    <span class="medal-left" :style="this.medalColor">{{ this.name }}</span>
-    <span class="medal-right" :style="this.textColor">{{ this.level }}</span>
+  <span id="medal-body" :style="medalBorder">
+    <span id="medal-left" :style="medalColor">{{ name }}</span>
+    <span id="medal-right" :style="textColor">{{ level }}</span>
   </span>
 </template>
 

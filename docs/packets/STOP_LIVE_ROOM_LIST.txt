@@ -1,0 +1,8 @@
+{
+    "cmd": "STOP_LIVE_ROOM_LIST",
+    "data": {
+        "room_id_list": [
+            22999597
+        ]
+    }
+}

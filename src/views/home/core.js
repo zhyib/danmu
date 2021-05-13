@@ -111,14 +111,24 @@ function handleComboSend(item) {
 }
 
 function handleDanmuMsg(item) {
-  return {
+  // console.log(item.info);
+  const ret = {
     type: TYPE.MAIN_BOX,
-    body: `
-      <medal :color="${item.info[3][4]}" :name="${item.info[3][1]}" :level="${item.info[3][0]}"></medal>
-      <span style="color: #999999">${item.info[2][1]}</span>：${item.info[1]}
-    `,
+    body: {
+      username: item.info[2][1],
+      text: item.info[1],
+    },
     raw: item.info,
   };
+  // 存在牌子
+  if (item.info[3].length !== 0) {
+    ret.body.medal = {
+      color: `#${(item.info[3][4]).toString(16).padStart(6, 0)}`,
+      name: item.info[3][1],
+      level: item.info[3][0],
+    };
+  }
+  return ret;
 }
 
 function handleEntryEffect(item) {
@@ -128,7 +138,9 @@ function handleEntryEffect(item) {
   str = str.replace('%>', '</b>');
   return {
     type: TYPE.MAIN_BOX,
-    body: `${str}`,
+    body: {
+      text: str,
+    },
     raw: data,
   };
 }
@@ -137,7 +149,9 @@ function handleHotRankChanged(item) {
   const { data } = item;
   return {
     type: TYPE.MAIN_BOX,
-    body: `分区榜单：${data.area_name} ${data.rank}`,
+    body: {
+      text: `分区榜单：${data.area_name} ${data.rank}`,
+    },
     raw: data,
   };
 }
@@ -147,7 +161,9 @@ function handleInteractWord(item) {
   if (CONFIG.DISPLAY.indexOf('DISPLAY_INTERACT_WORD') !== -1) {
     return {
       type: TYPE.MAIN_BOX,
-      body: `${data.uname} 进入房间`,
+      body: {
+        text: `${data.uname} 进入房间`,
+      },
       raw: data,
     };
   }
@@ -160,7 +176,9 @@ function handleNoticeMsg(item) {
   if (CONFIG.DISPLAY.DISPLAY_NOTICE_MSG !== -1) {
     return {
       type: TYPE.MAIN_BOX,
-      body: `${item.msg_common}`,
+      body: {
+        text: `${item.msg_common}`,
+      },
       raw: item,
     };
   }
@@ -186,7 +204,9 @@ function handleRoomRealTimeMessageUpdate(item) {
   const { data } = item;
   return {
     type: TYPE.MAIN_BOX,
-    body: `${data.roomid}直播间状态更新：粉丝数${data.fans}，粉丝团${data.fans_club}`,
+    body: {
+      text: `${data.roomid}直播间状态更新：粉丝数${data.fans}，粉丝团${data.fans_club}`,
+    },
     raw: data,
   };
 }
@@ -202,6 +222,15 @@ function handleSendGift(item) {
   }
   return {
     type: TYPE.HIDE,
+  };
+}
+
+function handleStopLiveRoomList(item) {
+  const { data } = item;
+  return {
+    type: TYPE.HIDE,
+    body: data.room_id_list,
+    raw: data,
   };
 }
 
@@ -234,6 +263,7 @@ const handlers = {
   ROOM_RANK: handleRoomRank,
   ROOM_REAL_TIME_MESSAGE_UPDATE: handleRoomRealTimeMessageUpdate,
   SEND_GIFT: handleSendGift, // ZIPPED
+  STOP_LIVE_ROOM_LIST: handleStopLiveRoomList,
   SUPER_CHAT_MESSAGE: handleSuperChatMessage,
   SUPER_CHAT_MESSAGE_JPN: handleSuperChatMessage,
   WIDGET_BANNER: handleWidgetBanner,

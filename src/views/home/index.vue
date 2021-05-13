@@ -34,7 +34,11 @@
       <el-row style="height: 100%;" :gutter=20>
         <el-col :span="12" style="height: 100%">
           <div style="height: 100%; overflow-y: auto" ref="mainCol">
-            <div v-html="displayMain" id="mainBox" ref="mainBox"></div>
+            <div id="mainBox" ref="mainBox">
+              <div v-for="(cmt, index) in displayMain" :key="index">
+                <comment :msg-body=cmt></comment>
+              </div>
+            </div>
           </div>
         </el-col>
         <el-col :span="12" style="height: 100%">
@@ -46,7 +50,6 @@
     </el-main>
     <el-footer style="height: 30px">
       <div id="foot-content">
-        <medal :color="13081892" :name="'zyb'" :level="7"></medal>
         Made by AkiraZhyib
         <a href="https://github.com/zhyib/danmu">
           <i class="fa fa-github" style="font-size: 20px"></i>
