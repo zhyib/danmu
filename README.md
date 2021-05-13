@@ -1,4 +1,6 @@
 # danmu
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zhyib/danmu/Node.js%20CI)
+![Node version](https://img.shields.io/badge/node-%3E%3D12.0-brightgreen)
 - node version v14.15.0
 - 自制弹幕姬
 - 命令行界面
