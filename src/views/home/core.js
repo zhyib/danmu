@@ -1,21 +1,9 @@
 // const WebSocket = require('ws');
 import pako from 'pako';
+import store from '@/store/index';
 
-const RES_CODE = {
-  HEART_BEAT: 2, // 心跳
-  HEART_BEAT_RES: 3, // 心跳回应
-  MSG: 5, // 通知
-  ENTER_ROOM: 7, // 进房
-  ENTER_ROOM_RES: 8, // 进房回应
-};
-
-const CONFIG = {
-  DISPLAY: [
-    // 'DISPLAY_INTERACT_WORD',
-    'DISPLAY_GIFT',
-    'DISPLAY_NOTICE_MSG',
-  ],
-};
+const RES_CODE = store.state.resCode;
+const CONFIG = store.state.displayConfig;
 
 const TYPE = {
   HIDE: 'Hide',
@@ -47,7 +35,8 @@ function encode(operation, params = {}) {
   const uid = 0;
   const requestBody = Buffer.from(`{"clientver":"${clientver}","platform":"${platform}","protover":${protover},"roomid":${roomid},"uid":${uid},"type":${type}}`);
 
-  const request = Buffer.concat([requestHead, requestBody], requestHead.length + requestBody.length);
+  const request = Buffer.concat([requestHead, requestBody],
+    requestHead.length + requestBody.length);
   request[3] = request.length;
   return request;
 }
@@ -98,7 +87,7 @@ function decode(buffer) {
 
 function handleComboSend(item) {
   const { data } = item;
-  if (CONFIG.DISPLAY.indexOf('DISPLAY_GIFT') !== -1) {
+  if (CONFIG.indexOf('DISPLAY_GIFT') !== -1) {
     return {
       type: TYPE.GIFT_BOX,
       body: `${data.uname} ${data.action} ${data.gift_name} 共 ${data.total_num} 个`,
@@ -158,7 +147,7 @@ function handleHotRankChanged(item) {
 
 function handleInteractWord(item) {
   const { data } = item;
-  if (CONFIG.DISPLAY.indexOf('DISPLAY_INTERACT_WORD') !== -1) {
+  if (CONFIG.indexOf('DISPLAY_INTERACT_WORD') !== -1) {
     return {
       type: TYPE.MAIN_BOX,
       body: {
@@ -173,7 +162,7 @@ function handleInteractWord(item) {
 }
 
 function handleNoticeMsg(item) {
-  if (CONFIG.DISPLAY.DISPLAY_NOTICE_MSG !== -1) {
+  if (CONFIG.DISPLAY_NOTICE_MSG !== -1) {
     return {
       type: TYPE.MAIN_BOX,
       body: {
@@ -213,7 +202,7 @@ function handleRoomRealTimeMessageUpdate(item) {
 
 function handleSendGift(item) {
   const { data } = item;
-  if (CONFIG.DISPLAY.indexOf('DISPLAY_GIFT') !== -1) {
+  if (CONFIG.indexOf('DISPLAY_GIFT') !== -1) {
     return {
       type: TYPE.GIFT_BOX,
       body: `${data.uname} ${data.action} ${data.giftName} * ${data.num}`,
@@ -312,6 +301,4 @@ export {
   encode,
   decode,
   handlePacket,
-  CONFIG,
-  RES_CODE,
 };

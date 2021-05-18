@@ -8,7 +8,7 @@ module.exports = {
   publicPath: './',
   outputDir: 'dist',
   assetsDir: '',
-  lintOnSave: false,
+  lintOnSave: true,
   runtimeCompiler: false,
   productionSourceMap: true,
   devServer: {

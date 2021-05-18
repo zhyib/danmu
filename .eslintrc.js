@@ -10,9 +10,10 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
+    parser: 'babel-eslint',
   },
   plugins: [
-    'vue',
+    'vue', 'html',
   ],
   rules: {
     'linebreak-style': 0,

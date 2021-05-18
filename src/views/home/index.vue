@@ -12,8 +12,8 @@
             ></el-input>
           </el-col>
           <el-col :span="6">
-            <el-button type="primary" @click="connect">连接</el-button>
-            <el-button type="primary" @click="disconnect">断开</el-button>
+            <el-button id="button-connect" type="primary" @click="connect">连接</el-button>
+            <el-button id="button-disconnect" type="primary" @click="disconnect">断开</el-button>
           </el-col>
         </el-row>
         <div id="status">

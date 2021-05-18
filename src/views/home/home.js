@@ -1,6 +1,6 @@
 import Comment from '@/components/comment/index.vue';
 import {
-  encode, decode, handlePacket, CONFIG, RES_CODE,
+  encode, decode, handlePacket,
 } from './core';
 
 export default {
@@ -14,7 +14,8 @@ export default {
       popularity: 0,
       ws: null,
       heatBeat: null,
-      displayConfig: CONFIG.DISPLAY,
+      displayConfig: this.$store.state.displayConfig,
+      resCode: this.$store.state.resCode,
       LIMIT_MAIN: 10,
     };
   },
@@ -30,7 +31,7 @@ export default {
         });
         return;
       }
-      CONFIG.ROOM_ID = roomid;
+      this.$store.commit('updateRoomid', { roomid });
 
       const topThis = this;
       if (this.ws) {
@@ -42,10 +43,10 @@ export default {
       ws.onopen = function onopen() {
         console.log('Connection open ...');
         try {
-          ws.send(encode(RES_CODE.ENTER_ROOM, { roomid }));
-          ws.send(encode(RES_CODE.HEART_BEAT, { roomid }));
+          ws.send(encode(topThis.resCode.ENTER_ROOM, { roomid }));
+          ws.send(encode(topThis.resCode.HEART_BEAT, { roomid }));
           topThis.heartBeat = setInterval(() => {
-            ws.send(encode(RES_CODE.HEART_BEAT, { roomid }));
+            ws.send(encode(topThis.resCode.HEART_BEAT, { roomid }));
           }, 30000);
         } catch (e) {
           console.log(e);
@@ -134,10 +135,8 @@ export default {
       }
     },
   },
-  computed: {},
+  computed: {
+  },
   watch: {
-    displayConfig() {
-      CONFIG.DISPLAY = this.displayConfig;
-    },
   },
 };
