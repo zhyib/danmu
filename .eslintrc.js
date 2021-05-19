@@ -16,6 +16,7 @@ module.exports = {
     'vue', 'html',
   ],
   rules: {
+    camelcase: 0,
     'linebreak-style': 0,
     'no-console': 0,
     'no-plusplus': 0,

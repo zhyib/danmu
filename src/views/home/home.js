@@ -22,14 +22,17 @@ export default {
         {
           label: 'DISPLAY_INTERACT_WORD',
           icon: 'fas fa-sign-in-alt',
+          text: '入场',
         },
         {
           label: 'DISPLAY_GIFT',
           icon: 'fas fa-gift',
+          text: '礼物',
         },
         {
           label: 'DISPLAY_NOTICE_MSG',
           icon: 'fas fa-volume-up',
+          text: '广播',
         },
       ],
     };
@@ -109,7 +112,7 @@ export default {
     displayPacket(packet) {
       switch (packet.type) {
         case 'HEART_BEAT_RES':
-          this.popularity = packet.body[0];
+          [this.popularity] = packet.body;
           break;
         case 'MSG':
           this.handleMsg(packet);
@@ -128,31 +131,38 @@ export default {
       const bodys = packet.body;
       for (let i = 0; i < bodys.length; i++) {
         const inner = bodys[i];
-        switch (inner.type) {
-          case 'MainBox':
-            this.displayMain.push(bodys[i].body);
-            this.$nextTick(() => {
-              this.$refs.mainCol.scrollTop = this.$refs.mainBox.scrollHeight;
-            });
-            break;
-          case 'GiftBox':
-            this.displayGift += `${bodys[i].body}</br>`;
-            this.$nextTick(() => {
-              this.$refs.giftCol.scrollTop = this.$refs.giftBox.scrollHeight;
-            });
-            break;
-          case 'Hide':
-            break;
-          case 'Unknown':
-            console.log(inner);
-            break;
-          default:
-            throw new Error(`Cannot display: Unhandled type, ${inner.type}`);
+        if (inner) {
+          switch (inner.type) {
+            case 'MainBox':
+              this.displayMain.push(bodys[i].body);
+              this.$nextTick(() => {
+                this.$refs.mainCol.scrollTop = this.$refs.mainBox.scrollHeight;
+              });
+              break;
+            case 'GiftBox':
+              this.displayGift += `${bodys[i].body}</br>`;
+              this.$nextTick(() => {
+                this.$refs.giftCol.scrollTop = this.$refs.giftBox.scrollHeight;
+              });
+              break;
+            case 'Hide':
+              break;
+            case 'Unknown':
+              console.log(inner);
+              break;
+            default:
+              throw new Error(`Cannot display: Unhandled type, ${inner.type}`);
+          }
         }
       }
     },
-    clear() {
+    clear(event) {
       this.displayMain = [];
+      // let { target } = event;
+      // if (target.nodeName === 'I') {
+      //   target = event.target.parentNode;
+      // }
+      // target.blur();
     },
     handleChange(val) {
       this.$store.commit('updateDisplayConfig', { val });

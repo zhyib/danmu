@@ -38,16 +38,18 @@
           </el-col>
           <el-col style="width: 60px; text-align: right">
             <div>
-              <el-button
-                  class="button-group"
-                  id="button-clear"
-                  icon="el-icon-delete"
-                  @click="clear"
-                  size="mini"
-                  plain
-                  round
-              >
-              </el-button>
+              <el-tooltip effect="dark" content="清空弹幕" placement="left">
+                <el-button
+                    class="button-group"
+                    id="button-clear"
+                    @click="clear"
+                    size="mini"
+                    plain
+                    round
+                >
+                  <i class="far fa-trash-alt"></i>
+                </el-button>
+              </el-tooltip>
             </div>
           </el-col>
           <el-col style="width: 160px; text-align: right">
@@ -58,7 +60,9 @@
                     :label="btn.label"
                     :key="index"
                 >
-                  <i :class="btn.icon"></i>
+                  <el-tooltip effect="dark" :content="btn.text" placement="left">
+                    <i :class="btn.icon"></i>
+                  </el-tooltip>
                 </el-checkbox-button>
               </el-checkbox-group>
             </div>
@@ -87,9 +91,9 @@
     <el-footer style="height: 30px">
       <div id="foot-content">
         Made by AkiraZhyib
-<!--        <a href="https://github.com/zhyib/danmu">-->
-          <i class="fab fa-github" style="font-size: 20px"></i>
-<!--        </a>-->
+        <!--        <a href="https://github.com/zhyib/danmu">-->
+        <i class="fab fa-github" style="font-size: 20px"></i>
+        <!--        </a>-->
       </div>
     </el-footer>
   </el-container>

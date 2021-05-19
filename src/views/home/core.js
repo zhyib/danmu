@@ -122,8 +122,8 @@ function handleDanmuMsg(item) {
 function handleEntryEffect(item) {
   const { data } = item;
   let str = data.copy_writing;
-  str = str.replace('<%', '<b>');
-  str = str.replace('%>', '</b>');
+  str = str.replace('<%', '【');
+  str = str.replace('%>', '】');
   return {
     type: TYPE.MAIN_BOX,
     body: {
@@ -162,10 +162,13 @@ function handleInteractWord(item) {
 
 function handleNoticeMsg(item) {
   if (store.state.displayConfig.includes('DISPLAY_NOTICE_MSG')) {
+    let { msg_common } = item;
+    msg_common = msg_common.replace('<%', '【').replace('<%', '【');
+    msg_common = msg_common.replace('%>', '】').replace('%>', '】');
     return {
       type: TYPE.MAIN_BOX,
       body: {
-        text: `${item.msg_common}`,
+        text: `${msg_common}`,
       },
       raw: item,
     };
@@ -263,6 +266,7 @@ function handleMessage(packet) {
     body: [],
   };
   packet.body.forEach((item) => {
+    // console.log(item.cmd);
     if (item >= 0 && item <= 9) {
       //
     } else if (handlers[item.cmd] !== undefined) {
