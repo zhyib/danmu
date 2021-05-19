@@ -3,7 +3,6 @@ import pako from 'pako';
 import store from '@/store/index';
 
 const RES_CODE = store.state.resCode;
-const CONFIG = store.state.displayConfig;
 
 const TYPE = {
   HIDE: 'Hide',
@@ -87,7 +86,7 @@ function decode(buffer) {
 
 function handleComboSend(item) {
   const { data } = item;
-  if (CONFIG.indexOf('DISPLAY_GIFT') !== -1) {
+  if (store.state.displayConfig.includes('DISPLAY_GIFT')) {
     return {
       type: TYPE.GIFT_BOX,
       body: `${data.uname} ${data.action} ${data.gift_name} 共 ${data.total_num} 个`,
@@ -137,7 +136,7 @@ function handleEntryEffect(item) {
 function handleHotRankChanged(item) {
   const { data } = item;
   return {
-    type: TYPE.MAIN_BOX,
+    type: TYPE.HIDE,
     body: {
       text: `分区榜单：${data.area_name} ${data.rank}`,
     },
@@ -147,7 +146,7 @@ function handleHotRankChanged(item) {
 
 function handleInteractWord(item) {
   const { data } = item;
-  if (CONFIG.indexOf('DISPLAY_INTERACT_WORD') !== -1) {
+  if (store.state.displayConfig.includes('DISPLAY_INTERACT_WORD')) {
     return {
       type: TYPE.MAIN_BOX,
       body: {
@@ -162,7 +161,7 @@ function handleInteractWord(item) {
 }
 
 function handleNoticeMsg(item) {
-  if (CONFIG.DISPLAY_NOTICE_MSG !== -1) {
+  if (store.state.displayConfig.includes('DISPLAY_NOTICE_MSG')) {
     return {
       type: TYPE.MAIN_BOX,
       body: {
@@ -202,7 +201,7 @@ function handleRoomRealTimeMessageUpdate(item) {
 
 function handleSendGift(item) {
   const { data } = item;
-  if (CONFIG.indexOf('DISPLAY_GIFT') !== -1) {
+  if (store.state.displayConfig.includes('DISPLAY_GIFT')) {
     return {
       type: TYPE.GIFT_BOX,
       body: `${data.uname} ${data.action} ${data.giftName} * ${data.num}`,
@@ -290,7 +289,7 @@ function handlePacket(packet) {
     case RES_CODE.ENTER_ROOM_RES:
       return {
         type: 'ENTER_ROOM_RES',
-        body: [`连接房间${CONFIG.ROOM_ID}成功`],
+        body: [`连接房间${store.state.roomid}成功`],
       };
     default:
       throw new Error('Cannot handle: Unknown operation');

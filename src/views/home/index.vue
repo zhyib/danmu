@@ -2,8 +2,8 @@
   <el-container id="container">
     <el-header id="header">
       <div>
-        <el-row :gutter=20>
-          <el-col :span="18">
+        <el-row type="flex" :gutter=10>
+          <el-col style="flex: 1">
             <el-input
                 v-model="roomid"
                 placeholder="请输入房间号"
@@ -11,23 +11,59 @@
                 clearable
             ></el-input>
           </el-col>
-          <el-col :span="6">
-            <el-button id="button-connect" type="primary" @click="connect">连接</el-button>
-            <el-button id="button-disconnect" type="primary" @click="disconnect">断开</el-button>
+          <el-col style="width: 160px">
+            <el-button
+                id="button-connect"
+                :type="isConnected ? 'success' : 'primary'"
+                @click="connect"
+            >
+              <span v-if="isConnected">重连</span>
+              <span v-else>连接</span>
+            </el-button>
+            <el-button
+                id="button-disconnect"
+                type="danger"
+                :disabled="!isConnected"
+                @click="disconnect"
+            >
+              断开
+            </el-button>
           </el-col>
         </el-row>
-        <div id="status">
-          <div id="popularity">
-            人气值：{{ popularity }}
-          </div>
-          <div id="check-boxes">
-            <el-checkbox-group v-model="displayConfig">
-              <el-checkbox label="DISPLAY_INTERACT_WORD">进入房间</el-checkbox>
-              <el-checkbox label="DISPLAY_GIFT">赠送礼物</el-checkbox>
-              <el-checkbox label="DISPLAY_NOTICE_MSG">全场广播</el-checkbox>
-            </el-checkbox-group>
-          </div>
-        </div>
+        <el-row type="flex" style="padding-top: 5px" :gutter=10>
+          <el-col style="flex: 1;">
+            <div id="popularity">
+              人气值：{{ popularity }}
+            </div>
+          </el-col>
+          <el-col style="width: 60px; text-align: right">
+            <div>
+              <el-button
+                  class="button-group"
+                  id="button-clear"
+                  icon="el-icon-delete"
+                  @click="clear"
+                  size="mini"
+                  plain
+                  round
+              >
+              </el-button>
+            </div>
+          </el-col>
+          <el-col style="width: 160px; text-align: right">
+            <div id="check-boxes">
+              <el-checkbox-group v-model="displayConfig" size="mini" @change="handleChange">
+                <el-checkbox-button
+                    v-for="(btn, index) in checkButtons"
+                    :label="btn.label"
+                    :key="index"
+                >
+                  <i :class="btn.icon"></i>
+                </el-checkbox-button>
+              </el-checkbox-group>
+            </div>
+          </el-col>
+        </el-row>
       </div>
     </el-header>
     <el-main style="height: 100%">
@@ -52,7 +88,7 @@
       <div id="foot-content">
         Made by AkiraZhyib
         <a href="https://github.com/zhyib/danmu">
-          <i class="fa fa-github" style="font-size: 20px"></i>
+          <i class="fab fa-github" style="font-size: 20px"></i>
         </a>
       </div>
     </el-footer>

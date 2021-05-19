@@ -3,7 +3,7 @@ import App from './App.vue';
 import './plugins/element.js';
 import router from './router';
 import store from './store';
-import '@/static/css/global.css'
+import '@/static/css/global.css';
 
 Vue.config.productionTip = false;
 

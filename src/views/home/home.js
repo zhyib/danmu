@@ -17,6 +17,21 @@ export default {
       displayConfig: this.$store.state.displayConfig,
       resCode: this.$store.state.resCode,
       LIMIT_MAIN: 10,
+      isConnected: false,
+      checkButtons: [
+        {
+          label: 'DISPLAY_INTERACT_WORD',
+          icon: 'fas fa-sign-in-alt',
+        },
+        {
+          label: 'DISPLAY_GIFT',
+          icon: 'fas fa-gift',
+        },
+        {
+          label: 'DISPLAY_NOTICE_MSG',
+          icon: 'fas fa-volume-up',
+        },
+      ],
     };
   },
   methods: {
@@ -48,6 +63,7 @@ export default {
           topThis.heartBeat = setInterval(() => {
             ws.send(encode(topThis.resCode.HEART_BEAT, { roomid }));
           }, 30000);
+          topThis.isConnected = true;
         } catch (e) {
           console.log(e);
         }
@@ -87,6 +103,7 @@ export default {
     disconnect() {
       // 终止心跳包发送
       clearInterval(this.heatBeat);
+      this.isConnected = false;
       this.ws.close();
     },
     displayPacket(packet) {
@@ -133,6 +150,12 @@ export default {
             throw new Error(`Cannot display: Unhandled type, ${inner.type}`);
         }
       }
+    },
+    clear() {
+      this.displayMain = [];
+    },
+    handleChange(val) {
+      this.$store.commit('updateDisplayConfig', { val });
     },
   },
   computed: {

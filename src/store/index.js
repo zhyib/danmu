@@ -20,8 +20,11 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    updateRoomid(state, payload) {
-      state.roomid = payload.roomid;
+    updateRoomid(state, { roomid }) {
+      state.roomid = roomid;
+    },
+    updateDisplayConfig(state, { val }) {
+      state.displayConfig = val;
     },
   },
   actions: {

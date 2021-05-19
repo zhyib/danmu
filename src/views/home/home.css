@@ -7,11 +7,11 @@
     height: 60px;
 }
 
-#status {
-    padding-top: 8px;
-    display: flex;
-    justify-content: space-between;
-}
+/*#status {*/
+/*    padding-top: 8px;*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*}*/
 
 #foot-content {
     text-align: right;
@@ -32,3 +32,8 @@ a:hover {
     color: #999999;
     text-decoration: underline;
 }
+
+.button-group {
+    padding: 7px 7px !important;
+}
+
