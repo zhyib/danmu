@@ -13,7 +13,7 @@ export default {
       displayGift: '',
       popularity: 0,
       ws: null,
-      heatBeat: null,
+      heartBeat: null,
       displayConfig: this.$store.state.displayConfig,
       resCode: this.$store.state.resCode,
       LIMIT_MAIN: 10,
@@ -102,7 +102,7 @@ export default {
     },
     disconnect() {
       // 终止心跳包发送
-      clearInterval(this.heatBeat);
+      clearInterval(this.heartBeat);
       this.isConnected = false;
       this.ws.close();
     },

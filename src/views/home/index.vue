@@ -87,9 +87,9 @@
     <el-footer style="height: 30px">
       <div id="foot-content">
         Made by AkiraZhyib
-        <a href="https://github.com/zhyib/danmu">
+<!--        <a href="https://github.com/zhyib/danmu">-->
           <i class="fab fa-github" style="font-size: 20px"></i>
-        </a>
+<!--        </a>-->
       </div>
     </el-footer>
   </el-container>
