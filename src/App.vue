@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/v4-shims.css">
     <!--    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">-->
     <!-- <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> -->
