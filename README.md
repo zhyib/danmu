@@ -7,7 +7,7 @@
 
 
 ### TODO
-- [ ] API 适配（按字母升序）
+- [ ] API 适配（按字母升序，没必要实现的也标注为以实现）
     - [ ] ACTIVITY_BANNER_UPDATE_V2
     - [ ] ANCHOR_LOT_AWARD
     - [ ] ANCHOR_LOT_END
@@ -16,11 +16,16 @@
     - [x] DANMU_MSG
     - [x] ENTRY_EFFECT
     - [ ] GUARD_BUY
+    - [x] HOT_RANK_CHANGED
     - [x] INTERACT_WORD
+    - [ ] LIVE
     - [x] NOTICE_MSG
+    - [ ] ONLINE_RANK_TOP3
+    - [ ] ONLINE_RANK_V2
+    - [x] ROOM_RANK
     - [x] ROOM_REAL_TIME_MESSAGE_UPDATE
     - [x] SEND_GIFT
-    - [ ] STOP_LIVE_ROOM_LIST
+    - [x] STOP_LIVE_ROOM_LIST
     - [x] SUPER_CHAT_MESSAGE
     - [x] SUPER_CHAT_MESSAGE_JPN
     - [ ] USER_TOAST_MSG
@@ -31,4 +36,4 @@
 
 
 ### 参考API
-> [https://github.com/lovelyyoshino/Bilibili-Live-API/blob/master/API.WebSocket.md]()
+> [https://github.com/lovelyyoshino/Bilibili-Live-API/blob/master/API.WebSocket.md](https://github.com/lovelyyoshino/Bilibili-Live-API/blob/master/API.WebSocket.md)
