@@ -1,21 +1,43 @@
 #container {
     height: 100%;
     padding: 10px 10px 0 10px;
+    /*box-sizing: border-box;*/
 }
 
-#header {
-    height: 60px;
+#header-container {
+    height: 80px;
+    width: 100%;
 }
 
-/*#status {*/
-/*    padding-top: 8px;*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*}*/
-
-#foot-content {
-    text-align: right;
+#main-container {
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    width: 100%;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    padding: 30px 0 20px 0;
 }
+
+#main-col {
+    width: 47%;
+    overflow-y: auto;
+}
+
+#main-box {
+    padding: 5px;
+}
+
+#gift-col {
+    width: 47%;
+    overflow-y: auto;
+}
+
+#gift-box {
+    padding: 5px;
+}
+
 
 a:link {
     font-size: 12px;

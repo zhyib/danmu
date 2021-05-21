@@ -4,7 +4,7 @@
     <!-- <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> -->
     <!-- <router-view/> -->
-    <home></home>
+    <border></border>
   </div>
 </template>
 
@@ -19,11 +19,11 @@
 </style>
 
 <script>
-import home from '@/views/home/index';
+import border from '@/views/border/index';
 
 export default {
   components: {
-    home,
+    border,
   },
 };
 </script>

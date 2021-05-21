@@ -1,0 +1,51 @@
+#border-whole {
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#border-card {
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 0;
+}
+
+.el-tabs__content {
+    height: 100%;
+    overflow: hidden;
+}
+
+.el-tab-pane {
+    height: 100%;
+}
+
+#button-control {
+    z-index: 100;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    height: auto;
+}
+
+#drag-part {
+    /*background-color: aqua;*/
+    /*z-index: 100;*/
+    position: absolute;
+    -webkit-user-select: none !important;
+    -webkit-app-region: drag !important;
+    left: 150px;
+    right: 75px;
+    height: 40px;
+}
+
+#border-footer{
+    padding: 5px 5px;
+    text-align: right;
+    height: auto;
+    font-size: small;
+    bottom: 0;
+}

@@ -10,7 +10,7 @@ export default {
     return {
       roomid: '',
       displayMain: [],
-      displayGift: '',
+      displayGift: [],
       popularity: 0,
       ws: null,
       heartBeat: null,
@@ -140,7 +140,7 @@ export default {
               });
               break;
             case 'GiftBox':
-              this.displayGift += `${bodys[i].body}</br>`;
+              this.displayGift.push(`${bodys[i].body}`);
               this.$nextTick(() => {
                 this.$refs.giftCol.scrollTop = this.$refs.giftBox.scrollHeight;
               });

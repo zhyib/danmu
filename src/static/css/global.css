@@ -1,5 +1,65 @@
 html, body {
     height: 100%;
     margin: 0;
-    padding: 20 20 20 20;
 }
+
+button, input, .el-checkbox-group, .el-tabs__item, .shadow-need {
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px #bcbcbc,
+    -3px -3px 10px #ffffff;
+}
+
+
+/*button{*/
+/*    box-shadow: 0 2px 12px 0 rgba( 31, 38, 135, 0.37 );*/
+/*    backdrop-filter: blur( 6.5px );*/
+/*    -webkit-backdrop-filter: blur( 6.5px );*/
+/*    border-radius: 10px;*/
+/*    border: 1px solid rgba( 255, 255, 255, 0.18 );*/
+/*}*/
+
+/*.scroll {*/
+/*    margin: 100px auto;*/
+/*    border: 1px solid #000;*/
+/*    width: 200px;*/
+/*    height: 300px;*/
+/*    overflow: auto;*/
+/*}*/
+
+/*.scroll::-webkit-scrollbar {*/
+/*    width: 10px;*/
+/*    height: 10px;*/
+/*}*/
+
+/*!*正常情况下滑块的样式*!*/
+/*.scroll::-webkit-scrollbar-thumb {*/
+/*    background-color: rgba(0, 0, 0, .05);*/
+/*    border-radius: 10px;*/
+/*    -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);*/
+/*}*/
+
+/*!*鼠标悬浮在该类指向的控件上时滑块的样式*!*/
+/*.scroll:hover::-webkit-scrollbar-thumb {*/
+/*    background-color: rgba(0, 0, 0, .2);*/
+/*    border-radius: 10px;*/
+/*    -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);*/
+/*}*/
+
+/*!*鼠标悬浮在滑块上时滑块的样式*!*/
+/*.scroll::-webkit-scrollbar-thumb:hover {*/
+/*    background-color: rgba(0, 0, 0, .4);*/
+/*    -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);*/
+/*}*/
+
+/*!*正常时候的主干部分*!*/
+/*.scroll::-webkit-scrollbar-track {*/
+/*    border-radius: 10px;*/
+/*    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);*/
+/*    background-color: white;*/
+/*}*/
+
+/*!*鼠标悬浮在滚动条上的主干部分*!*/
+/*.scroll::-webkit-scrollbar-track:hover {*/
+/*    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .4);*/
+/*    background-color: rgba(0, 0, 0, .01);*/
+/*}*/
