@@ -68,7 +68,7 @@ function decode(buffer) {
 
     if (unzipped) {
       // 同一条 message 中可能存在多条信息，用正则筛出来
-      const group = unzipped.toString().split(/[\x00-\x1f]+/);
+      const group = unzipped.toString().split(/[\u0000]*(?:[\u0000]|$)*/);
       group.forEach((item) => {
         try {
           packet.body.push(JSON.parse(item));

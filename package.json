@@ -4,15 +4,15 @@
   "private": true,
   "main": "main.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
-    "build": "vue-cli-service build",
+    "node-dev": "vue-cli-service serve",
+    "node-build": "vue-cli-service build",
     "election-dev": "electron main.js",
     "electron-build": "electron-builder --win --x64",
-    "dev": "cross-env NODE_ENV=dev npm run election-dev | npm run serve",
-    "package": "cross-env NODE_ENV=prod npm run build && npm run electron-build",
+    "dev": "cross-env NODE_ENV=dev npm run election-dev | npm run node-dev",
+    "prod": "cross-env NODE_ENV=prod npm run node-build && npm run electron-build",
     "build:dev": " npm run dev",
-    "build:prod": " npm run package"
+    "build:prod": " npm run prod"
   },
   "build": {
     "appId": "com.xxx.app",
